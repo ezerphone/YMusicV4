@@ -17,8 +17,9 @@ import kotlin.time.Duration.Companion.minutes
  * Songs-only build: the channels whose videos are always allowed, even without YouTube's music mark.
  *
  * The list is a plain text file on the owner's server ([start]'s `url`), one channel per line:
- * a channel id (`UCxxxxxxxxxxxxxxxxxxxxxx`) or a channel link that contains it
- * (`https://www.youtube.com/channel/UC…`). Blank lines and anything after `#` are ignored.
+ * `UCxxxxxxxxxxxxxxxxxxxxxx = artist name`, or any line holding the channel id (a bare id, a
+ * `https://www.youtube.com/channel/UC…` link). Only the id is read; blank lines and anything after
+ * `#` are ignored.
  *
  * The last list that loaded is kept in the settings, so it applies from the first screen of the next
  * launch, also offline; the file is re-read on every launch and every [REFRESH] while the app runs.

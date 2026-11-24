@@ -109,6 +109,10 @@ jobs:
   android:
     needs: ffmpeg-android
     runs-on: ubuntu-24.04
+    # contents: write publishes the release; actions: read fetches the ffmpeg packs of this run.
+    permissions:
+      contents: write
+      actions: read
     env:
       # Whether to open secrets.enc (a tag, and the repo has its passphrase); the passphrase itself goes to
       # the Restore secrets step alone.
@@ -194,6 +198,14 @@ jobs:
 
       # With the decrypted sentry.auth.token the Sentry plugin uploads the ProGuard mapping and
       # source context for this build, so crashes from the shipped APKs symbolicate.
+      # The key the APKs are signed with, kept in the cache so every build installs as an update over the
+      # last one (the first build creates it). A cache unused for 7 days is evicted: the next build then
+      # signs with a new key and has to be installed fresh.
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ~/.android/debug.keystore
+          key: songs-debug-keystore-v1
+
       - name: Assemble release APKs
         working-directory: YMusicV4
         run: ./gradlew -Pproduction=true :androidApp:assembleRelease
@@ -213,3 +225,25 @@ jobs:
           name: ymusic-songs-apks
           path: YMusicV4/androidApp/build/outputs/apk/release/*.apk
           if-no-files-found: error
+
+      # A release per build, each APK under a fixed name, so
+      # https://github.com/<owner>/<repo>/releases/latest/download/YMusic-Songs-arm64-v8a.apk always
+      # downloads the newest build.
+      - name: Publish the APKs as a release
+        working-directory: YMusicV4
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/release"
+          mkdir -p "$out"
+          for f in androidApp/build/outputs/apk/release/*.apk; do
+            abi="$(basename "$f" | sed -n 's/.*-\(arm64-v8a\|armeabi-v7a\|x86_64\|x86\)-release\.apk$/\1/p')"
+            [ -n "$abi" ] || { echo "::error::no ABI in $(basename "$f")" >&2; exit 1; }
+            cp "$f" "$out/YMusic-Songs-$abi.apk"
+          done
+          ls -la "$out"
+          gh release create "songs-$GITHUB_RUN_NUMBER" "$out"/*.apk \
+            --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --latest \
+            --title "YMusic Songs $GITHUB_RUN_NUMBER" \
+            --notes "Songs-only YMusic build. Most phones: YMusic-Songs-arm64-v8a.apk"
