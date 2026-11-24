@@ -1,0 +1,193 @@
+# YMusic Songs - ערוצים מורשים
+# שורה לכל ערוץ: מזהה ערוץ (UC...). כל מה שאחרי # הוא הערה.
+# ערוצי "Topic" הם ערוצי השירים האוטומטיים של יוטיוב לאותו אמן.
+
+# ===== חרדי / חסידי =====
+# Mordechai Ben David
+UC_vOeqbvaSt_P5haPc03oNQ  # MBD Official מרדכי בן דוד
+UCK8I9UUQukwqy_QADoFg6Og  # Mordechai Ben David - Topic
+# Avraham Fried
+UCYCWdJniUxe41JbVwO0_SLA  # Avraham Fried אברהם פריד
+UC1-uPfCV7ZcLCSou9v_Vclw  # Avraham Fried - Topic
+# Yaakov Shwekey
+UC-iTQfrv8pVLjlErZquyJ6Q  # Yaakov Shwekey יעקב שוואקי
+UC_dRX63mhvOrenBjYWJx9mA  # Yaakov Shwekey - Topic
+# Motty Steinmetz
+UCjh-noHUsafx_CSiieHNXFg  # מוטי שטיינמץ | Motty Steinmetz
+UCholwaLtPDqQy5QyFDoB7jw  # Motty Steinmetz - Topic
+# Lipa Schmeltzer
+UCA5DZvGtE9DChiczMl_Q8sg  # Lipa Schmeltzer
+UCo69C9U4ol49c-C3GHCbk2w  # Lipa Schmeltzer - Topic
+# Shulem Lemmer
+UCYMQ1v0VToIUyqojpVkR_0w  # Shulem
+UCNu_lYQXHXhzkf1YU-aZl8Q  # Shulem - Topic
+# Beri Weber
+UClpw0oWNakQBOm152wgB9FQ  # Beri Weber
+UC8n1Io5T76kSYeuYVQHzsQA  # Beri Weber - Topic
+# Mordechai Shapiro
+UCTVRe7FcTlGJ3fbTpdVLpTQ  # Mordechai Shapiro
+UCm5x_womXL5E7TAYca5JkZQ  # Mordechai Shapiro - Topic
+# Avremi Roth
+UCnQ7AkaLl9n808Xlql3VknA  # אברימי רוט Avremi Roth
+UCoyBqWAeokrfs6a_mjwPgog  # Avremi Roth - Topic
+UCFJgbUQRzfocQlZOW9GoZ7g  # Avremi Roth - Topic
+# Ari Goldwag
+UCwDf3w4fd3ArqWX0TgQHSQg  # Ari Goldwag
+UC31c9ukaP0w1Gugn6mTb5pA  # Ari Goldwag - Topic
+# Shmueli Ungar
+UCrWpPQvZBBhn6i0yaWM4HBA  # Shmueli Ungar
+UCckg6lcQaW00lvNHwCjo7xA  # Shmueli Ungar - Topic
+# Shloime Daskal
+UCaSs5F26wYkoirLRfsA1Upg  # Shloime Daskal - Topic
+# Isaac Honig
+UCbk_x1-200WJ4JIeR4zP1eg  # Isaac Honig
+UCwHR2iKY28Zf7rfK75VzqYQ  # Isaac Honig - Topic
+UCJohR7RBelNRz3cB3IVjKJw  # Yitzchok Honig יצחק האניג - Topic
+# Zanvil Weinberger
+UCc1kEI-azAZK8Ev86QcHyfg  # Zanvil Weinberger - Topic
+UCj_7gFFqFSNHPxjnlv37zbg  # Zanvil Weinberger - Topic
+# Levy Falkowitz
+UChptG82MlvHVkl16Fq5ZMHw  # Levy Falkowitz | לוי פלקוביץ
+UCNPF_y4u71Oqy0YwA8ubdBQ  # Levy Falkowitz - Topic
+# Avrum Mordche Schwartz
+UC6C0Tj0-SDu2FnxbZTNnCKA  # Avrum Mordche אברהם מרדכי
+UCqnvjgHxzq32rs2_fBN7RWw  # Avrum Mordche Schwartz - Topic
+# Hershy Weinberger
+UCqpLt2geqYK77CLEGTvaR6w  # Hershy Weinberger
+UCLQylHgxsIaMasCFKhL7A1g  # Hershy Weinberger - Topic
+# Yidi Bialostozky
+UCamRHpU8Cbm7Qm9DQN7VCdA  # Yidi Bialostozky
+UCsOh9VaqwlAyjoS7cU1nxdw  # Yidi Bialostozky - Topic
+# Dovid Gabay
+UCLWG4-F391gt4xJhADyB26g  # Dovid Gabay - Topic
+UC3sJ5xk9l-xnuzOrh_m01_A  # Dovid Gabay
+# Ari Hill
+UC7M6GHmUZsvQxV1fB1ojSpw  # ארי היל | Ari Hill
+UCtp6_C1Owbh3TxC95eM4s5Q  # ארי היל - Topic
+# Yossi Green
+UCBY1pzHy9ZMy7X9_d6PWqNg  # Yossi Green Official
+UCtzGTGyCz_k0ZXMCZ1u_tkQ  # Yossi Green - Topic
+# Yishai Lapidot ישי לפידות
+UCdZH8lei0vVw53zvSwctoLg  # Ishay Lapidot Music
+UCDMB4hM9-uw2dZB9aqq8Ixg  # Yishai Lapidot ישי לפידות - Topic
+UCKUqlCQkBMhBGIvZSj_DVWg  # ישי לפידות - Topic
+# Dudi Kalish דודי קאליש
+UCp2BDktRg61cfmy0XOzANzA  # דודי קאליש | Dudi kalish
+UCRBXWlF1sZ7QRfXspqqA-Mg  # דודי קאליש - Topic
+# Aharon Razel אהרל'ה רזאל
+UCojWjHpsimQY0IYbWCaNyLQ  # אהרן רזאל - Aaron Razel
+UC0G86THXeKPXlHHjbP1aT4g  # Aaron Razel - Topic
+# Itzik Orlev איציק אורלב
+UCuI-wtqkUJfonhMIvBXLzMQ  # איציק אורלב Itzik Orlev
+UC0x-EPyzVsBm5hZiQDzM6QQ  # איציק אורלב - Topic
+# Avraham Rosenblum
+UCvozLwjhkWL_yx_P2bpoB9Q  # Avraham Rosenblum & Diaspora - Topic
+# Benny Friedman
+UCefarW8iWzuNO7NedV-om-w  # Benny Friedman
+UCOSu81C9u9V-3JoOglWwEEw  # Benny Friedman - Topic
+# Baruch Levine
+UCvmd0HODk1AifuiCMvhy57g  # Baruch Levine Official ברוך לוין
+UC_IxmTZosg-FyYkvf1mzYnw  # Baruch Levine - Topic
+# Simcha Leiner
+UCO8P03TN2v5cUsfUN0sK-xQ  # Simcha Leiner
+UCu6IT3jTOtAcNfjIQSIyCQQ  # Simcha Leiner - Topic
+# Joey Newcomb
+UCxvdGe53DUIaPT_qGlKWUyg  # Joey Newcomb
+UC1QsA-Q6SUKX9gWi1heQDEA  # Joey Newcomb - Topic
+# Shloime Gertner
+UCYNqohhjOXH913YOYs4dUlg  # Shloime Gertner | שלוימי גרטנר
+UCR4H633zdnrJOP7zgN2SvHg  # Shloime Gertner - Topic
+# Motty Ilowitz
+UCu00Gaae-7JWKNrU3YM_u9w  # Motty Ilowitz מאטי אילאוויטש
+UCVLQWjtgDSTZN37_YbISUAQ  # Motty Ilowitz - Topic
+UC58pT3wpteFncGkBVDOOLjA  # Motty Ilowitz - Topic
+# Eli Marcus
+UCZlyRQ4yQcoQIqd8DkOujYg  # elimarcusmusic
+UCY5qvQNoawFipLxi_KZwFUg  # Eli Marcus - Topic
+
+# ===== מקהלות ולייבלים =====
+# Yeshiva Boys Choir
+UC_Z1USMvEobo4M4WTqMXOUg  # EG Productions
+# Malchus Choir
+UCiZXqxS2Bg7zRlXeOViIaIg  # מקהלת מלכות - Malchut Choir
+UCpqY_vIKdtM61RBTaHxu4AA  # מקהלת מלכות הערוץ הרשמי | Malchus Choir The Official Channel
+UCTKCxKIKaTwEZ3p-zezdP9g  # מקהלת מלכות - Topic
+# Miami Boys Choir
+UCEz5yYrUVTnzZFvvikpJJ8A  # Yerachmiel Begun & The Miami Boys Choir
+UCrZ7hkbMeFtDfWGqF1SqFDw  # The Miami Boys Choir - Topic
+UCYaNF9z7ruUDRWzjv3dKa4w  # MIAMI BOYS CHOIR - OFFICIAL PAGE
+# Shira Choir
+UCtkh56YFjTJQbdr2gaxzltQ  # The Shira Choir
+UClM-MxPL_KypMIed3IQrO-w  # The Shira Choir - Topic
+# Lev Choir
+UCw4BaJcf8oiYb09uSatTAmw  # Lev Choir
+UCocMKCnr7-S5CImltRSFf6Q  # Lev Choir - Topic
+# Hamenagnim המנגנים
+UCb5oOOfKb_mVNj-qAeX64ow  # תזמורת גלילי המנגנים - Glili Hamenagnim
+UCYj7tMFZRtn7ch4OV8fBf0Q  # Hamenagnim - Topic
+# Kol Chai Music קול חי מיוזיק
+UCKb8ylzzQl-J7dtW8t5hLvw  # קול חי מיוזיק
+
+# ===== מזרחי / פיוט =====
+# Itzik Dadya איציק דדיה
+UCSpqaah4ia10xmBvTfh05RA  # איציק דדיה - הערוץ הרשמי - Itzik Dadya - Official
+UCyYxopnm7RssXFvUJ5gr_1Q  # איציק דדיה - Itzik Dadya
+UCuUcHnYY30pDCJ-wNjw20gA  # Itzik dadya - Topic
+# Meydad Tasa מידד טסה
+UCPIxf4WqVeB6e-n2odec7eQ  # מידד טסה - Meydad Tassa
+UCL6BVY3mcn4xFaMz3dgtt3g  # Meydad Tasa - Topic
+# Haim Israel חיים ישראל
+UCxvYf2PZyp5_BC_pKXL85mQ  # חיים ישראל | Haim Israel
+UClUekOdWArW4_a7HMb-DoBQ  # Haim Israel - Topic
+# Gad Elbaz גד אלבז
+UChiOXQSmZu339O0T_5I4LVA  # Gad Elbaz Official
+UCxEklyOKH3Jn1_1_AaRQsrQ  # Gad Elbaz - Topic
+# Moshe Habusha משה חבושה
+UC8lrbV90kWBbTX3EBJRmFxQ  # משה חבושה
+UCzszVBZhmxoyNgNcmuxuO4A  # Moshe Habusha - Topic
+# Ovadia Hamama עובדיה חממה
+UCvzDS-uc-W7-9dTWix-JyOQ  # OvadiaHamamaOfficial
+UCuWt3OSGkEzOaKWNMIXeOOA  # Ovadia Hamama - Topic
+UC0y4qBx2CdAOd4xKYPiWjNQ  # Ovadia Hamama - Topic
+# Haim Louk חיים לוק
+UC3m0ag_rxdlILatMd7pG9Ng  # Haim Louk
+UCGpbqlzH4iPeXDBQY1GM65Q  # חיים לוק - Topic
+# Yosef Karduner יוסף קרדונר
+UCOkPXFYcs-jmxm59jjy7Jrg  # Yosef Karduner
+UCMc0MFnRaPmdJ4i2NWKctGg  # יוסף קרדונר - הערוץ הרשמי
+UCyZ525681KTQecNIWindCnQ  # Yosef Karduner - Topic
+# David D'Or דוד דאור
+UCf9SRV7GUlgSPVMHEGX1aoQ  # David Deor
+UCcYeUZoBiOVFvU6lfTun3CQ  # David D'Or - Topic
+# Elkana Marziano אלקנה מרזיאנו
+UCi8_FOxueZtxaYYYxyL74uQ  # אלקנה מרציאנו - הערוץ הרשמי
+UCSqL7bhA_9iPujliPCskhRw  # אלקנה מרציאנו - Topic
+# Avi Ilson אבי אילסון
+UCdmrPjdNRKCdWYmLd3xi5nw  # אבי אילסון הערוץ הרשמי Avi Ilson Official Channel
+UClhlH-uzEKhMTlJQWbD2nrA  # אבי אילסון - Topic
+# Benny Elbaz בני אלבז
+UC0CUF1xwu9vvd8zJaV0Brcw  # בני אלבז - Beni Elbaz - Topic
+UCIFv_3yx5iL9mfRKnnkECEQ  # Beni Elbaz-בני אלבז - Topic
+# Itzik Eshel איציק אשל
+UCZ7Dt7QQrv_FjSVhcMi6LnQ  # איציק אשל הערוץ הרשמי Itzik Eshel
+UClvC6RVqJBG0YDercVgujHA  # איציק אשל - Topic
+
+# ===== דתי =====
+# Ishay Ribo ישי ריבו
+UCHwxQ7twj_VWIPMcJ3Zdyqg  # ישי ריבו | Ishay Ribo
+UCVYVQD6Qpuvo-Zg_jmjTrkw  # Ishay Ribo - Topic
+# Yonatan Razel יונתן רזאל
+UCFAJIV6f49URx_8ZB9mFv5Q  # יונתן רזאל - Yonatan Razel
+UCIs-s_nxV5WKupy0gEGZiXw  # Yonatan Razel - Topic
+# Amir Benayoun עמיר בניון
+UCerYyxoFp9Ln-zgxvM7X_0w  # Amir Benayoun עמיר בניון
+UC5K4lxcHbumZswaXkcEjdMw  # Amir Benayoun - Topic
+# Akiva Turgeman עקיבא תורגמן
+UCb2w826w2GmMdZBqh8T0wQw  # עקיבא - Akiva
+UCjgCYlDrW4KfazEah3uT5cA  # Akiva - Topic
+# Eviatar Banai אביתר בנאי
+UC9FS2UPpXO-o_NUDm3nTArA  # אביתר בנאי
+UCVt1BFd1HYHtEa1VD0y8kKQ  # Evyatar Banai - Topic
+# Hanan Ben Ari חנן בן ארי
+UCVOwOs8Cn4Uv0Hc2foG9YCQ  # Hanan Ben Ari
+UCz4N_ARAr1VxGzXq_Xj850g  # Hanan Ben Ari - Topic
