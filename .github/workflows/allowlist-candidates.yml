@@ -1,11 +1,11 @@
 name: allowlist-candidates
 
-# Looks up the names in tools/allowlist/names.txt on YouTube's channel search and commits the
-# results (tools/allowlist/candidates.tsv) back to this branch, to choose the allowlist from.
+# Looks up the names in allowlist/names.txt on YouTube's channel search and commits the
+# results (allowlist/candidates.tsv) back to this branch, to choose the allowlist from.
 on:
   push:
     branches: [allowlist]
-    paths: ['tools/allowlist/names.txt', 'tools/allowlist/resolve.py', '.github/workflows/allowlist-candidates.yml']
+    paths: ['allowlist/names.txt', 'allowlist/resolve.py', '.github/workflows/allowlist-candidates.yml']
   workflow_dispatch:
 
 permissions:
@@ -20,11 +20,11 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install --upgrade yt-dlp
-      - run: python tools/allowlist/resolve.py tools/allowlist/names.txt tools/allowlist/candidates.tsv
+      - run: python allowlist/resolve.py allowlist/names.txt allowlist/candidates.tsv
       - name: Commit the candidates
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tools/allowlist/candidates.tsv
+          git add allowlist/candidates.tsv
           git commit -m "allowlist: channel search results" || echo "no change"
           git push

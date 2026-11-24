@@ -1,0 +1,67 @@
+# Search names for the songs-only allowlist: one artist / choir / label per line, "# section" headers.
+# section: חרדי / חסידי
+Mordechai Ben David
+Avraham Fried
+Yaakov Shwekey
+Motty Steinmetz
+Benny Friedman
+Lipa Schmeltzer
+Shulem Lemmer
+Beri Weber
+Baruch Levine
+Simcha Leiner
+Mordechai Shapiro
+Avremi Roth
+Joey Newcomb
+Shloime Gertner
+Ari Goldwag
+Shmueli Ungar
+Motty Ilowitz
+Shloime Daskal
+Isaac Honig
+Zanvil Weinberger
+Eli Marcus
+Levy Falkowitz
+Avrum Mordche Schwartz
+Hershy Weinberger
+Yidi Bialostozky
+Dovid Gabay
+Ari Hill
+Yossi Green
+Yishai Lapidot ישי לפידות
+Dudi Kalish דודי קאליש
+Moshe Kloss משה קלוס
+Aharon Razel אהרל'ה רזאל
+Itzik Orlev איציק אורלב
+Avraham Rosenblum
+# section: מקהלות ולייבלים
+Yeshiva Boys Choir
+Malchus Choir
+Miami Boys Choir
+Shira Choir
+Zemiros Group
+Lev Choir
+Hamenagnim המנגנים
+Mostly Music
+Kol Chai Music קול חי מיוזיק
+# section: מזרחי / פיוט
+Itzik Dadya איציק דדיה
+Meydad Tasa מידד טסה
+Haim Israel חיים ישראל
+Gad Elbaz גד אלבז
+Moshe Habusha משה חבושה
+Ovadia Hamama עובדיה חממה
+Haim Louk חיים לוק
+Yosef Karduner יוסף קרדונר
+David D'Or דוד דאור
+Itzik Eshel איציק אשל
+Elkana Marziano אלקנה מרזיאנו
+Avi Ilson אבי אילסון
+Benny Elbaz בני אלבז
+# section: דתי
+Ishay Ribo ישי ריבו
+Hanan Ben Ari חנן בן ארי
+Yonatan Razel יונתן רזאל
+Amir Benayoun עמיר בניון
+Akiva Turgeman עקיבא תורגמן
+Eviatar Banai אביתר בנאי
