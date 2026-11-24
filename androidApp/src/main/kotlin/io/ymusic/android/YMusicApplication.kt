@@ -310,6 +310,8 @@ class YMusicApplication : Application() {
         // One client stack, one disk cache, shared by the engine and the player's embed fetch.
         val http = AppHttpClients(cacheDir.resolve("http-cache").toOkioPath(), logger = rootLogger)
         val settings = PrefsSettingsStore.open(this)
+        // Songs-only build: the owner's list of channels that are always allowed (before any feed loads).
+        io.ymusic.dynamicengine.yt.SongsOnlyAllowlist.start(scope, http.engine, settings, SONGS_ALLOWLIST_URL, rootLogger)
         if (Build.VERSION.SDK_INT >= 31) {
             val uiModes = getSystemService(UiModeManager::class.java)
             scope.launch {

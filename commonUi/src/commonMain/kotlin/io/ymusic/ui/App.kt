@@ -138,6 +138,7 @@ import io.ymusic.ui.resources.link_queued_last
 import io.ymusic.ui.resources.link_queued_next
 import io.ymusic.ui.resources.link_unsupported
 import io.ymusic.ui.resources.songs_only_link_blocked
+import io.ymusic.dynamicengine.yt.SongsOnlyAllowlist
 import io.ymusic.ui.resources.search_videos
 import io.ymusic.ui.resources.section_catalogue
 import io.ymusic.ui.resources.section_discover
@@ -757,8 +758,8 @@ private fun AppRoot(
                 when (target) {
                     is YtLinkTarget.Video -> {
                         // Songs-only build: a YouTube link carries no song/video mark, so only
-                        // YouTube Music links (songs) open; any other video link is refused.
-                        if (!isYouTubeMusicLink(url)) {
+                        // YouTube Music links (songs) and videos of allowlisted channels open.
+                        if (!isYouTubeMusicLink(url) && !SongsOnlyAllowlist.allows(target.item)) {
                             showSnackbar(getString(Res.string.songs_only_link_blocked))
                             return@collect
                         }

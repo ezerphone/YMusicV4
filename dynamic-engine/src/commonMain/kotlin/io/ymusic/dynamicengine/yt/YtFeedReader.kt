@@ -160,9 +160,10 @@ private suspend fun readFilterOption(r: JsonReader): YtFilterOption {
 /**
  * Songs-only build: only songs can be played or downloaded. A video item is kept only when YouTube
  * marks it as music ([YtFeedItem.musicVideo]: the MUSIC overlay on YouTube, every song/video on
- * YouTube Music); playlists, albums, channels and tags stay so they can still be opened.
+ * YouTube Music) or its channel is on the owner's [SongsOnlyAllowlist]; playlists, albums, channels
+ * and tags stay so they can still be opened.
  */
-internal fun YtFeedItem.isAllowedInSongsOnly(): Boolean = kind != YtFeedItem.KIND_VIDEO || musicVideo
+internal fun YtFeedItem.isAllowedInSongsOnly(): Boolean = SongsOnlyAllowlist.allows(this)
 
 /** A read section plus whether it had items before the songs-only filter. */
 private class ReadSection(val section: YtSection, val hadItems: Boolean) {
