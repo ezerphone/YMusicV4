@@ -1,5 +1,6 @@
 """Looks up each name in names.txt on YouTube's channel search and writes the top results to candidates.tsv."""
 import json
+import time
 import subprocess
 import sys
 import urllib.parse
@@ -8,6 +9,15 @@ CHANNEL_FILTER = "EgIQAg%3D%3D"  # YouTube search filter: channels only
 
 
 def search(name: str, count: int = 4) -> list[dict]:
+    for attempt in range(3):
+        entries = search_once(name, count)
+        if entries:
+            return entries
+        time.sleep(5 * (attempt + 1))
+    return []
+
+
+def search_once(name: str, count: int) -> list[dict]:
     url = (
         "https://www.youtube.com/results?search_query="
         + urllib.parse.quote(name)
