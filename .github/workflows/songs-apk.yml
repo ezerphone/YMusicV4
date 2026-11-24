@@ -12,7 +12,8 @@ permissions:
 
 env:
   IS_TAG: 'false'
-  SAVE_CACHE: 'false'
+  # Saved on this branch, so the next build reuses the ffmpeg packs, the NDK and Gradle.
+  SAVE_CACHE: 'true'
   ORG_GRADLE_PROJECT_sentryEnvironment: beta
   FFMPEG_BUILD_REPO: ymusic-io/ffmpeg-build
   FFMPEG_BUILD_REF: 4d2dc9ae0c73dc5f01733f18af070412013a6a93
