@@ -1704,6 +1704,9 @@ internal fun QualityChip(
     }
 }
 
+/** Songs-only build: hides the video quality picker. */
+private const val SONGS_ONLY = true
+
 /** The current quality's label, the choices, and the preferred one; null while the item offers no choice. */
 private class QualityChoices(val label: String, val options: List<Pair<String, String>>, val selectedId: String?)
 
@@ -1717,7 +1720,8 @@ private fun qualityChoices(player: io.ymusic.player.Player): QualityChoices? {
         VideoQualityState.AUTO -> autoQualityLabel
         else -> option.label
     }
-    if (quality.options.isEmpty()) return null
+    // Songs-only build: playback is always audio-only, so there is no quality to choose.
+    if (quality.options.isEmpty() || SONGS_ONLY) return null
     val label = quality.options.firstOrNull { it.quality == quality.actualQuality }?.let(::qualityLabel)
         ?: when (quality.actualQuality) {
             VideoQualityState.AUTO -> autoQualityLabel

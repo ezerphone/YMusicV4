@@ -47,7 +47,8 @@ internal fun QuickPresetFields(
     onChange: (QuickDownloadPreset) -> Unit,
 ) {
     val audioFormats = if (ffmpegAvailable) listOf(DownloadFormat.AUDIO_WEBM, DownloadFormat.M4A, DownloadFormat.MP3) else listOf(DownloadFormat.M4A)
-    val videoFormats = if (ffmpegAvailable) listOf(DownloadFormat.VIDEO_MP4, DownloadFormat.VIDEO_WEBM) else emptyList()
+    // Songs-only build: no video formats to save in a preset.
+    val videoFormats = emptyList<DownloadFormat>()
     OptionLine(stringResource(Res.string.download_format), presetLabel(preset)) { close ->
         MenuGroupLabel(stringResource(Res.string.download_audio_only))
         ChoiceMenuItems(

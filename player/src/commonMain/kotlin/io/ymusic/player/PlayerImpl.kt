@@ -403,21 +403,14 @@ internal class PlayerImpl(
 
     override fun setStableVolume(enabled: Boolean) = pushConfig(currentConfig.copy(stableVolume = enabled))
 
+    // Songs-only build: playback is always audio-only, so a request for video is ignored.
     override fun setAudioOnly(audioOnly: Boolean) {
-        pushConfig(currentConfig.copy(audioOnly = audioOnly))
+        pushConfig(currentConfig.copy(audioOnly = true))
     }
 
+    // Songs-only build: there is no video quality to pick; every choice stays audio-only.
     override fun selectVideoQuality(quality: String) {
-        if (quality == VideoQualityState.AUDIO_ONLY) {
-            setAudioOnly(true)
-            return
-        }
-        pushConfig(
-            currentConfig.copy(
-                preferVideoQuality = quality to nextSeq(),
-                audioOnly = false,
-            ),
-        )
+        setAudioOnly(true)
     }
 
     override fun selectCaption(languageCode: String?) =
@@ -428,7 +421,9 @@ internal class PlayerImpl(
     override fun setScaleMode(mode: ScaleMode) = pushConfig(currentConfig.copy(scaleMode = mode))
 
     /** Update the held config and push it to the active engine (the one application path). */
-    private fun pushConfig(next: PlaybackConfig) {
+    private fun pushConfig(requested: PlaybackConfig) {
+        // Songs-only build: no config ever turns video on.
+        val next = requested.copy(audioOnly = true)
         if (next == currentConfig) return
         currentConfig = next
         _currentEngine.value?.setConfig(engineConfig)

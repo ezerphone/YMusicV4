@@ -32,7 +32,7 @@ private suspend inline fun <T> JsonReader.readArrayOf(element: (JsonReader) -> T
 }
 
 internal suspend fun readFeedPage(r: JsonReader): YtFeedPage {
-    var sections: List<YtSection> = emptyList()
+    var sections: List<ReadSection> = emptyList()
     var continuation: String? = null
     var chips: List<YtChip> = emptyList()
     var sort: List<YtChip> = emptyList()
@@ -63,8 +63,10 @@ internal suspend fun readFeedPage(r: JsonReader): YtFeedPage {
         }
     }
     r.endObject()
+    // Songs-only build: a section left with nothing but non-song videos (now filtered out) is dropped.
+    sections = sections.filter { it.items.isNotEmpty() || !it.hadItems || it.section.continuation != null }
     return YtFeedPage(
-        sections, continuation, chips, sort, chipsWrap, emptyTitle, emptyMessage,
+        sections.map { it.section }, continuation, chips, sort, chipsWrap, emptyTitle, emptyMessage,
         filterGroups, pageHeader, pageTabs, autoplayVideoId, partialErrorCode,
     )
 }
@@ -155,7 +157,19 @@ private suspend fun readFilterOption(r: JsonReader): YtFilterOption {
     return YtFilterOption(label, params, selected, disabled)
 }
 
-private suspend fun readSection(r: JsonReader): YtSection {
+/**
+ * Songs-only build: only songs can be played or downloaded. A video item is kept only when YouTube
+ * marks it as music ([YtFeedItem.musicVideo]: the MUSIC overlay on YouTube, every song/video on
+ * YouTube Music); playlists, albums, channels and tags stay so they can still be opened.
+ */
+internal fun YtFeedItem.isAllowedInSongsOnly(): Boolean = kind != YtFeedItem.KIND_VIDEO || musicVideo
+
+/** A read section plus whether it had items before the songs-only filter. */
+private class ReadSection(val section: YtSection, val hadItems: Boolean) {
+    val items: List<YtFeedItem> get() = section.items
+}
+
+private suspend fun readSection(r: JsonReader): ReadSection {
     var header: YtSectionHeader? = null
     var layout = YtSection.LAYOUT_LIST
     var items: List<YtFeedItem> = emptyList()
@@ -177,7 +191,8 @@ private suspend fun readSection(r: JsonReader): YtSection {
         }
     }
     r.endObject()
-    return YtSection(header, layout, items, collapsible, collapsedRows, continuation, playMode)
+    val songs = items.filter { it.isAllowedInSongsOnly() }
+    return ReadSection(YtSection(header, layout, songs, collapsible, collapsedRows, continuation, playMode), items.isNotEmpty())
 }
 
 private suspend fun readSectionHeader(r: JsonReader): YtSectionHeader {

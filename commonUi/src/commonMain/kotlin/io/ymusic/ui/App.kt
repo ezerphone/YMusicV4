@@ -137,6 +137,7 @@ import io.ymusic.ui.resources.link_open_failed
 import io.ymusic.ui.resources.link_queued_last
 import io.ymusic.ui.resources.link_queued_next
 import io.ymusic.ui.resources.link_unsupported
+import io.ymusic.ui.resources.songs_only_link_blocked
 import io.ymusic.ui.resources.search_videos
 import io.ymusic.ui.resources.section_catalogue
 import io.ymusic.ui.resources.section_discover
@@ -755,7 +756,13 @@ private fun AppRoot(
                 }
                 when (target) {
                     is YtLinkTarget.Video -> {
-                        val video = target.item
+                        // Songs-only build: a YouTube link carries no song/video mark, so only
+                        // YouTube Music links (songs) open; any other video link is refused.
+                        if (!isYouTubeMusicLink(url)) {
+                            showSnackbar(getString(Res.string.songs_only_link_blocked))
+                            return@collect
+                        }
+                        val video = target.item.copy(musicVideo = true)
                         val queueEmpty = coordinator.player.queue.value.items.isEmpty()
                         val downloads = graph.downloads
                         val quickFormat = downloads?.let { action.quickDownloadFormat(it) }
@@ -1669,4 +1676,10 @@ private fun keyboardOverlap(): Dp {
     val withKeyboard = WindowInsets.safeDrawing.getBottom(density)
     val withoutKeyboard = WindowInsets.systemBars.union(WindowInsets.displayCutout).getBottom(density)
     return with(density) { (withKeyboard - withoutKeyboard).coerceAtLeast(0).toDp() }
+}
+
+/** Songs-only build: whether [url] is a YouTube Music link (music.youtube.com), whose videos are songs. */
+private fun isYouTubeMusicLink(url: String): Boolean {
+    val host = url.substringAfter("://", url).substringBefore('/').substringBefore('?').substringBefore(':').lowercase()
+    return host == "music.youtube.com"
 }

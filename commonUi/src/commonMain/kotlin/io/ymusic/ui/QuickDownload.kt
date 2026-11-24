@@ -47,13 +47,14 @@ data class QuickDownloadPreset(
     val captionLanguage: String?,
     val audioQuality: AudioQuality = AudioQuality.BEST,
 ) {
+    // Songs-only build: a video format (an old preset, a link action) downloads as M4A audio instead.
     fun request(video: YtFeedItem, fileNamePrefix: String = ""): DownloadRequest = DownloadRequest(
         videoId = video.id,
         title = video.title,
         artist = null,
         thumbnailUrl = video.thumbs.largestThumbUrl(),
-        format = format,
-        requestedHeight = if (format.kind == DownloadKind.VIDEO) height else null,
+        format = if (format.kind == DownloadKind.VIDEO) DownloadFormat.M4A else format,
+        requestedHeight = null,
         fileName = DownloadFileNames.fromTitle(fileNamePrefix + video.title).ifEmpty { null },
         captions = if (captionLanguage == null) CaptionChoice(emptyList()) else null,
         audioLanguage = audioLanguage,

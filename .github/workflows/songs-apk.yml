@@ -1,0 +1,214 @@
+name: songs-apk
+
+# Songs-only build: the Android APKs only (the ffmpeg packs + the android job of release.yml), run on
+# every push to the songs-only branch or by hand. No secrets: debug-signed, no Sentry, no remote config.
+on:
+  push:
+    branches: [songs-only]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  IS_TAG: 'false'
+  SAVE_CACHE: 'false'
+  ORG_GRADLE_PROJECT_sentryEnvironment: beta
+  FFMPEG_BUILD_REPO: ymusic-io/ffmpeg-build
+  FFMPEG_BUILD_REF: 4d2dc9ae0c73dc5f01733f18af070412013a6a93
+  NDK_VERSION: 28.2.13676358
+
+jobs:
+  ffmpeg-android:
+    name: ffmpeg ${{ matrix.slug }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { slug: android-armeabi-v7a, runner: ubuntu-24.04 }
+          - { slug: android-arm64-v8a, runner: ubuntu-24.04 }
+          - { slug: android-x86, runner: ubuntu-24.04 }
+          - { slug: android-x86_64, runner: ubuntu-24.04 }
+    steps:
+      - id: cache
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ffmpeg-build/out/${{ matrix.slug }}
+          # Android packs also key on the NDK: a pack must not outlive the toolchain it was built with.
+          key: ffmpeg-${{ matrix.slug }}-${{ env.FFMPEG_BUILD_REF }}-ndk${{ env.NDK_VERSION }}
+
+      - if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: ${{ env.FFMPEG_BUILD_REPO }}
+          ref: ${{ env.FFMPEG_BUILD_REF }}
+          path: ffmpeg-build
+          submodules: recursive
+          fetch-depth: 1
+
+      # The NDK from the cache the android job saves; sdkmanager, retried, when that misses.
+      - if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          # ANDROID_HOME of the ubuntu-24.04 image (a with: input cannot read the runner's env).
+          path: /usr/local/lib/android/sdk/ndk/${{ env.NDK_VERSION }}
+          key: ndk-${{ env.NDK_VERSION }}-${{ runner.os }}-${{ runner.arch }}
+      - if: steps.cache.outputs.cache-hit != 'true'
+        name: Install NDK
+        run: |
+          ndk="$ANDROID_HOME/ndk/$NDK_VERSION"
+          [ "$ANDROID_HOME" = /usr/local/lib/android/sdk ] ||
+            echo "::warning::ANDROID_HOME is $ANDROID_HOME: the NDK cache path no longer matches it"
+          for attempt in 1 2 3; do
+            [ -f "$ndk/source.properties" ] && break
+            rm -rf "$ndk"
+            if [ "$attempt" -gt 1 ]; then
+              echo "::warning::sdkmanager could not install ndk;$NDK_VERSION, retrying in $((attempt * 30)) s"
+              sleep $((attempt * 30))
+            fi
+            yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "ndk;$NDK_VERSION" > /dev/null || true
+          done
+          [ -f "$ndk/source.properties" ] || { echo "::error::sdkmanager could not install ndk;$NDK_VERSION" >&2; exit 1; }
+          echo "ANDROID_NDK_ROOT=$ndk" >> "$GITHUB_ENV"
+
+      - if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: ffmpeg-build
+        run: |
+          sudo apt-get update && sudo apt-get install -y nasm automake autoconf libtool pkg-config patchelf
+          scripts/build-android.sh "${SLUG#android-}" || {
+            # A dependency's configure failure prints only its verdict; the reason is in its log.
+            for log in .deps-$SLUG/.build/*/config.log; do
+              [ -f "$log" ] && { echo "::group::$log"; tail -n 80 "$log"; echo "::endgroup::"; }
+            done
+            exit 1
+          }
+        env:
+          SLUG: ${{ matrix.slug }}
+
+      - if: steps.cache.outputs.cache-hit != 'true' && env.SAVE_CACHE == 'true'
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ffmpeg-build/out/${{ matrix.slug }}
+          key: ${{ steps.cache.outputs.cache-primary-key }}
+
+      # The builds take the pack from this job, not from the cache: a tag's miss is never saved. tar keeps
+      # the executable bits and symlinks an artifact would drop.
+      - name: Hand the pack on
+        run: tar -cf "ffmpeg-$SLUG.tar" -C ffmpeg-build/out "$SLUG"
+        env:
+          SLUG: ${{ matrix.slug }}
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: ffmpeg-${{ matrix.slug }}
+          path: ffmpeg-${{ matrix.slug }}.tar
+          retention-days: 7
+          if-no-files-found: error
+
+  android:
+    needs: ffmpeg-android
+    runs-on: ubuntu-24.04
+    env:
+      # Whether to open secrets.enc (a tag, and the repo has its passphrase); the passphrase itself goes to
+      # the Restore secrets step alone.
+      HAS_SECRETS: ${{ startsWith(github.ref, 'refs/tags/') && secrets.SECRETS_PASSPHRASE != '' }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          path: YMusicV4
+
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: ffmpeg-android-*
+          path: ffmpeg-packs
+          merge-multiple: true
+      - name: Unpack the ffmpeg packs
+        run: |
+          mkdir -p ffmpeg-build/out
+          for abi in armeabi-v7a arm64-v8a x86 x86_64; do
+            tar -xf "ffmpeg-packs/ffmpeg-android-$abi.tar" -C ffmpeg-build/out
+          done
+
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+      # Gradle User Home (wrapper, dependencies, the build cache), saved by master only.
+      - uses: gradle/actions/setup-gradle@0b6dd653ba04f4f93bf581ec31e66cbd7dcb644d # v4
+        with:
+          cache-read-only: ${{ env.SAVE_CACHE != 'true' }}
+      # The npm cache npx installs esbuild and typescript from, keyed on their pins.
+      - id: npx
+        working-directory: YMusicV4
+        shell: bash
+        run: |
+          version() { sed -n "s/.*const val $1 = \"\([^\"]*\)\".*/\1/p" buildSrc/src/main/kotlin/Dependencies.kt; }
+          echo "key=npx-$RUNNER_OS-$RUNNER_ARCH-esbuild$(version esbuild)-typescript$(version typescript)" >> "$GITHUB_OUTPUT"
+      - id: npx-cache
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ~/.npm
+          key: ${{ steps.npx.outputs.key }}
+      # The ffmpeg packs' NDK, for :quickjs and :mse's CMake builds (they honor ANDROID_NDK_ROOT). Cached
+      # (saved by master), so a release does not depend on Google's download, which flakes.
+      - id: ndk
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          # ANDROID_HOME of the ubuntu-24.04 image (a with: input cannot read the runner's env).
+          path: /usr/local/lib/android/sdk/ndk/${{ env.NDK_VERSION }}
+          key: ndk-${{ env.NDK_VERSION }}-${{ runner.os }}-${{ runner.arch }}
+      - name: Install NDK
+        run: |
+          ndk="$ANDROID_HOME/ndk/$NDK_VERSION"
+          [ "$ANDROID_HOME" = /usr/local/lib/android/sdk ] ||
+            echo "::warning::ANDROID_HOME is $ANDROID_HOME: the NDK cache path no longer matches it"
+          for attempt in 1 2 3; do
+            [ -f "$ndk/source.properties" ] && break
+            rm -rf "$ndk"
+            if [ "$attempt" -gt 1 ]; then
+              echo "::warning::sdkmanager could not install ndk;$NDK_VERSION, retrying in $((attempt * 30)) s"
+              sleep $((attempt * 30))
+            fi
+            yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "ndk;$NDK_VERSION" > /dev/null || true
+          done
+          [ -f "$ndk/source.properties" ] || { echo "::error::sdkmanager could not install ndk;$NDK_VERSION" >&2; exit 1; }
+          echo "ANDROID_NDK_ROOT=$ndk" >> "$GITHUB_ENV"
+      - if: steps.ndk.outputs.cache-hit != 'true' && env.SAVE_CACHE == 'true'
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: /usr/local/lib/android/sdk/ndk/${{ env.NDK_VERSION }}
+          key: ${{ steps.ndk.outputs.cache-primary-key }}
+
+      # secrets.enc → secrets.properties + signing/. Off a tag, or without SECRETS_PASSPHRASE, the build
+      # runs on defaults: debug-signed, no Sentry upload, no remote config.
+      - name: Restore secrets
+        if: env.HAS_SECRETS == 'true'
+        working-directory: YMusicV4
+        env:
+          SECRETS_PASSPHRASE: ${{ secrets.SECRETS_PASSPHRASE }}
+        run: ./decrypt.sh
+
+      # With the decrypted sentry.auth.token the Sentry plugin uploads the ProGuard mapping and
+      # source context for this build, so crashes from the shipped APKs symbolicate.
+      - name: Assemble release APKs
+        working-directory: YMusicV4
+        run: ./gradlew -Pproduction=true :androidApp:assembleRelease
+      - if: steps.npx-cache.outputs.cache-hit != 'true' && env.SAVE_CACHE == 'true'
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ~/.npm
+          key: ${{ steps.npx.outputs.key }}
+
+      - name: Discard secrets
+        if: always()
+        working-directory: YMusicV4
+        run: rm -rf secrets.properties signing
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: ymusic-songs-apks
+          path: YMusicV4/androidApp/build/outputs/apk/release/*.apk
+          if-no-files-found: error

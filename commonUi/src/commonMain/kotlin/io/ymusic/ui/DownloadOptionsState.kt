@@ -29,7 +29,7 @@ import projectcommon.error.codedError
 
 /** The last picks, so the next download opens where this one left off (for the app session). */
 private object LastDownloadChoice {
-    var audioOnly = true
+    var audioOnly = true // songs-only build: never changes
     var audioFormat = DownloadFormat.M4A
     var audioQuality = AudioQuality.BEST
     var container = DownloadFormat.VIDEO_MP4
@@ -78,7 +78,8 @@ internal class DownloadOptionsState(
             return if (video.duration != null || probedMs == null) video else video.copy(duration = formatMillis(probedMs), durationMs = probedMs)
         }
 
-    val hasVideo: Boolean get() = options?.video?.isNotEmpty() == true
+    // Songs-only build: a download is always audio, so no video track is ever offered.
+    val hasVideo: Boolean get() = false
 
     /** The video containers this video can be downloaded in. */
     val containers: List<DownloadFormat>

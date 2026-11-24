@@ -853,4 +853,5 @@
     <string name="downloads_cancel_selected_message">What was downloaded so far is deleted.</string>
     <string name="downloads_cancel_selected_keep">Keep</string>
     <string name="data_dir_unusable">YMusic can't open its data folder, %1$s. Make sure it's a folder you can write to, then open YMusic again. (%2$s)</string>
+    <string name="songs_only_link_blocked">Only songs can be played in this version of YMusic. Open the link from YouTube Music instead.</string>
 </resources>

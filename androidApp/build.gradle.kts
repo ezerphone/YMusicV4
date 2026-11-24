@@ -101,6 +101,8 @@ android {
             applicationIdSuffix = ".debug"
         }
         release {
+            // Songs-only build: its own package, so it installs next to the official YMusic.
+            applicationIdSuffix = ".songs"
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
